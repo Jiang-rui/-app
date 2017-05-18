@@ -2,30 +2,10 @@
 
 > A Vue.js project
 
-## Build Setup
+[demo效果]:http://120.25.254.231
 
-``` bash
-# install dependencies
-npm install
+>在这个项目里主要使用了vue、vue-router、以及axios框架，算是我自己学习vue的一个
+>阶段性总结
 
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
-```
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
-"# -app" 
+>>这个项目之所以能完成，还要感谢豆瓣公开的api，这是我所使用的api说明
+[豆瓣api]:https://developers.douban.com/wiki/?title=api_v2
