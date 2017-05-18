@@ -7,7 +7,7 @@
 	  				<router-link :to="{path: '/movie/in_theaters'}">更多</router-link>
 	  			</div>
 	  			<div class="content">
-	  				<ul class="content-wrapper" @touchstart="slide($event)">
+	  				<ul class="content-wrapper" @touchstart="slide($event,move)">
 	  					<li v-for = "subject in inTheaters_show" :key="subject.id" class="item">
 	  						<router-link :to="{name:'subject',params:{id: subject.id}}">
 	  							<div class="image-box" :style="'backgroundImage:url('+subject.images.medium+')'"></div>
@@ -107,7 +107,7 @@
 				comingSoon_show: [],
 				top250_show: [],
 				usBox_show: [],
-				city:'深圳'
+				city:'深圳',
 			}
 		},
 		created(){
@@ -118,7 +118,6 @@
 				} })
 				.then((response) =>{
 					this.inTheaters_show = response.data.subjects.slice(0,8);
-
 					})
 				.catch((err) => {
 					console.log(err)
@@ -149,42 +148,27 @@
 					this.usBox_show = response.data.subjects.slice(0,8);
 					// console.log(this.usBox_show)
 				})
+	
 		},
 		methods:{
 			slide(event){
 				let x = event.touches[0].clientX;
 				// console.log(x)
 				let target = event.currentTarget;
-				// console.log(target)
+				let move = 0
 				target.addEventListener('touchmove', function (event) {
 					/* body... */
 					event.preventDefault()
 					let x2 = event.touches[0].clientX;
-					let move = x2 - x;
-					let move2 = 0;
-					move2 = move2+move;
-					// console.log(move2)
-					if(move2 <0 && move2 > -510){
-						this.style.transform = `translateX(${move2}px)`;
+					let touch = x2 - x;
+					// this.move = this.move + touch;
+					// console.log(touch)
+					move += touch
+					// console.log(this.city)
+					if(move < 0 && move > -600){
+						this.style.transform = `translateX(${move}px)`;
 					}
-					
-				}, false)
-				// let content_boxs=this.$refs.slide.getElementsByClassName('content-wrapper');
-
-				// for(let i=0;i<content_boxs;i++){
-				// 	this.index = i;
-				// 	console.log(this.index)
-				// 	content_boxs[i].addEventListener('touchmove', function (event) {
-				// 	/* body... */
-				// 		event.preventDefault();
-				// 		let x2 = event.touches[0].clientX
-				// 		let move=x2-x;
-				// 		if(move <0){
-				// 			content_boxs[this.index].style.transform = `translateX(${move}px)`
-				// 		}
-				// 	}, false)
-				// }
-				
+				}, false)	
 			}	
 		},
 		components: {
@@ -221,7 +205,7 @@
 					display flex 
 					flex-wrap nowrap
 					flex-direction row
-					width 250%
+					width 980px
 					.item 
 						width 100px
 						margin-right 10px
@@ -235,9 +219,11 @@
 							.title-box 
 								width 100%
 								padding 5px 3px
-								text-overflow ellipsis
-								white-space nowrap
 								.title 
+									width 100%
+									overflow hidden
+									text-overflow ellipsis
+									white-space nowrap
 									font-size 14px
 									color #333
 							.rating-box 

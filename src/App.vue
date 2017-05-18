@@ -52,14 +52,14 @@ export default {
 }
 #app .top-bar .site-nav {
    height: 100%;
-   float: left;
-   padding: 15px 0 0 130px;
+   float: right;
+   padding: 15px 40px 0 0;
 }
-@media screen and (max-width: 320px){
+/*@media screen and (max-width: 320px){
   #app .top-bar .site-nav{
     padding-left: 80px;
   }
-}
+}*/
 #app .top-bar .site-nav ul li{
    font-size: 17px;
    line-height: 20px;
