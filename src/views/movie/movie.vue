@@ -181,6 +181,9 @@
 				}, false)	
 			}	
 		},
+		mounted(){
+			this.$emit('readyOn');
+		},
 		components: {
 			star
 		}

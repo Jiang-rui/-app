@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" >
     <div class="top-bar">
         <router-link :to="{path:'/'}">
             <div class="site-name">
@@ -15,21 +15,47 @@
         </div>
     </div>
     <div class="pad"></div>
-    <div class="content">
+    <div class="content" ref="content" @load="load">
         <transition>
            <router-view></router-view>
         </transition>
+    </div>
+    <div class="animate" ref="animate">
+        <div class="img-wrapper">
+          <img src="./assets/animate.png" width="100" height="123">
+        </div>
+        努力加载中……
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  mounted(){
+    this.$refs.content.style.display = 'none'
+    var that = this;
+    setTimeout(function (argument) {
+      /* body... */
+        that.load()
+    }, 3000)
+    // this.load()
+  },
+  methods:{
+     load(){
+        this.$refs.animate.style.display = 'none'
+        this.$refs.content.style.display = 'block'
+     }
+  }
 }
 </script>
 
 <style scoped>
+@keyframes animate {
+  0% {top:40%;}
+  50% {top:30%;}
+  100% {top:40%;}
+}
 #app .top-bar{
   position: fixed;
   top:0;
@@ -79,5 +105,20 @@ export default {
   width: 100%;
   height: 100%;
   overflow: hidden;
+}
+#app .animate{
+  line-height: 40px;
+  font-size: 16px;
+  font-weight: bold;
+  position: fixed;
+  top:40%;
+  white-space: nowrap;
+  left:55%;
+  transform: translateX(-50%);
+  color:#00b600;
+  animation: animate 1s infinite;
+}
+#app .animate .img-wrapper{
+  margin-left: -20px
 }
 </style>
