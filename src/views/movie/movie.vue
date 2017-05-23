@@ -7,7 +7,7 @@
 	  				<router-link :to="{path: '/movie/in_theaters'}">更多</router-link>
 	  			</div>
 	  			<div class="content">
-	  				<ul class="content-wrapper" @touchstart="slide($event,move)">
+	  				<ul class="content-wrapper" @touchstart="slide($event)">
 	  					<li v-for = "subject in inTheaters_show" :key="subject.id" class="item">
 	  						<router-link :to="{name:'subject',params:{id: subject.id}}">
 	  							<div class="image-box" :style="'backgroundImage:url('+subject.images.medium+')'"></div>
@@ -100,6 +100,8 @@
 	import axios from 'axios'
 	import star from '../../components/star/star.vue'
 	const HOST = '/api/'
+
+	let left = 0;
 	export default{
 		data(){
 			return {
@@ -155,19 +157,27 @@
 				let x = event.touches[0].clientX;
 				// console.log(x)
 				let target = event.currentTarget;
-				let move = 0
+				
+				// console.log(left)
 				target.addEventListener('touchmove', function (event) {
 					/* body... */
 					event.preventDefault()
 					let x2 = event.touches[0].clientX;
 					let touch = x2 - x;
 					// this.move = this.move + touch;
-					// console.log(touch)
-					move += touch
-					// console.log(this.city)
-					if(move < 0 && move > -600){
-						this.style.transform = `translateX(${move}px)`;
-					}
+					// console.log(this.move)
+					 left += touch
+					 if(left > 0){
+					 	left = 0;
+					 }else if(left < -540){
+					 	left = -540
+					 }
+					// console.log(left)
+					let that = this;
+					setTimeout(function () {
+						/* body... */
+						that.style.transform = `translateX(${left}px)`;
+					}, 100)
 				}, false)	
 			}	
 		},

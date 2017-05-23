@@ -7,7 +7,28 @@
 	</div>
 </template>
 <script type="text/ecmascript2015">
-	export default{}
+	import axios from 'axios'
+	const HOST = '/api'
+	export default{
+		data(){
+			return {
+				searchBook: [],
+				txt: ''
+			}
+		},
+		methods:{
+			search(){
+				console.log(this.txt)
+				axios.get(HOST + '/book/search',{params:{q: this.txt}})
+					.then((response) =>{
+						console.log(response.data)
+					})
+					.catch((err) =>{
+						console.log(err)
+					})
+			}
+		}
+	}
 </script>
 <style lang="stylus" rel="stylesheet/stylus">
 .book
@@ -21,6 +42,7 @@
 		outline-style none
 		border 1px solid #f0f0f0
 		margin 0 40px
+		border-radius 3px
 	.search-button 
 		display inline-block
 		padding 5px
