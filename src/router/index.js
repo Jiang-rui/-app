@@ -6,6 +6,9 @@ import music from '../views/music/music.vue'
 
 import card from '../views/movie/card.vue'
 import subject from '../views/movie/subject.vue'
+
+import index from '../components/index.vue'
+import sign from'../components/sign.vue'
 // import comingSoon from '../views/movie/comingSoon.vue'
 Vue.use(Router)
 
@@ -17,9 +20,29 @@ export default new Router({
       redirect: '/movie'
     },
     {
+      path: '/index',
+      name: 'index',
+      component: index
+    },
+    {
+      path: '/sign',
+      name: 'sign',
+      component: sign
+    },
+    {
       path:'/movie',
       name: 'movie',
       component: movie
+    },
+    {
+      path: '/movie/:list',
+      name:'list',
+      component: card
+    },
+    {
+      path: '/movie/subject/:id',
+      name:'subject',
+      component: subject
     },
     {
       path: '/book',
@@ -31,16 +54,7 @@ export default new Router({
       name: 'music',
       component: music
     },
-    {
-      path: '/movie/:list',
-      name:'list',
-      component: card
-    },
-    {
-      path: '/movie/subject/:id',
-      name:'subject',
-      component: subject
-    }
+    
     // {
     //   path:'/movie/intheater/:id',
     //   name: 'subject',

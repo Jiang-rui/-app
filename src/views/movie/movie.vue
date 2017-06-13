@@ -182,7 +182,7 @@
 			}	
 		},
 		mounted(){
-			this.$emit('readyOn');
+			// this.$emit('readyOn');
 		},
 		components: {
 			star
