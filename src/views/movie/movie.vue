@@ -195,7 +195,7 @@
 		padding 0 16px;
 		.unit-content 
 			padding-top 10px
-			padding-bottom 20px
+			// padding-bottom 20px
 			.header
 				position relative
 				.title
@@ -209,11 +209,11 @@
 					line-height 24px
 					position absolute
 					right 0
-					top 0
+					top -5px;
 			.content 
 				width 100%
 				overflow hidden
-				padding-top 14px
+				// padding-top 14px
 				.content-wrapper
 					display flex 
 					flex-wrap nowrap

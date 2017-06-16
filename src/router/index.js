@@ -9,7 +9,9 @@ import subject from '../views/movie/subject.vue'
 
 import index from '../components/index.vue'
 import sign from'../components/sign.vue'
-// import comingSoon from '../views/movie/comingSoon.vue'
+
+import listCard from '../views/music/Listcard.vue'
+import song from '../views/music/song.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -52,9 +54,18 @@ export default new Router({
     {
       path: '/music',
       name: 'music',
-      component: music
+      component: music,
     },
-    
+    {
+      path:'/listCard/:id',
+      name:'listCard',
+      component:listCard
+    },
+    {
+      path:'/song/:id',
+      name:'song',
+      component: song
+    }
     // {
     //   path:'/movie/intheater/:id',
     //   name: 'subject',

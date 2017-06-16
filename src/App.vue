@@ -84,14 +84,14 @@ export default {
 }
 #app .top-bar .title{
   font-size: 22px;
-  line-height: 47px;
+  /*line-height: 47px;*/
   color:#00b600;
   float:left;
 }
 #app .top-bar .site-nav {
    height: 100%;
    float: right;
-   padding: 15px 20px 0 0;
+   padding-top: 22px;
 }
 /*@media screen and (max-width: 320px){
   #app .top-bar .site-nav{

@@ -1,6 +1,6 @@
 <template>
 <div class="loadsign">
-	<form action="#" v-show="load" class="unit">
+	<form action="#" v-show="load" class="unit" method="GET">
 		<h1 class="title">登录我的世界</h1>
 		<div class="name">
 			<input type="text"  placeholder="邮箱/手机号/用户名" />
@@ -15,7 +15,7 @@
 			<a @click="tosign">没有账号，去注册！</a>
 		</div>
 	</form>
-	<form action="#" v-show="sign" class="unit">
+	<form action="#" v-show="sign" class="unit" method="POST">
 		<h1 class="title">注册账号</h1>
 		<div class="name">
 			<input type="text"  placeholder="邮箱/手机号/用户名" />
