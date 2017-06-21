@@ -3,7 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+
+import store from './store'
 import axios from 'axios'
+
 
 import MuseUI from 'muse-ui'
 import 'muse-ui/dist/muse-ui.css'
@@ -11,6 +14,8 @@ import 'muse-ui/dist/theme-carbon.css'
 
 Vue.use(MuseUI);
 
+import load from './components/load.vue'
+Vue.component('load',load);
 Vue.prototype.axios = axios;
 Vue.config.productionTip = false
 
@@ -18,6 +23,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })

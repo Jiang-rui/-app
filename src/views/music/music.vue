@@ -1,5 +1,5 @@
 <template>
-	<div class="music">
+	<div class="music" ref="music">
 		<h1 class="title">全部歌单</h1>
 		<div class="list">
 			<ul class="list-wrapper">
@@ -15,7 +15,6 @@
 				</li>
 			</ul>
 		</div>
-		<mu-infinite-scroll :scroller="scroller" :loading="loading" @load="loadMore"/>
 	</div>
 </template>
 <script type="text/ecmascript2015">
@@ -28,7 +27,8 @@
 				offset:0,
 				lists: [],
 				scroller: null,
-				loading: false
+				loading: false,
+				scroller: false
 			}
 		},
 		mounted(){
@@ -49,13 +49,23 @@
 					this.loading = false;
 				})
 			},
-			loadMore(){
-				this.load();
+			handleScroll () {
+				this.scrolled = window.scrollY > 0
+				let scrollTop = document.body.scrollTop;
+				let height  = window.screen.height;
+				let mHeight = document.body.offsetHeight;
+				if((scrollTop + height + 20) >mHeight){
+					this.get();
+				}
+			
 			}
 		},
 		created(){
 			this.get()
 		},
+		mounted(){
+			window.addEventListener('scroll',this.handleScroll);
+		}
 	}
 </script>
 <style lang="less" scoped>

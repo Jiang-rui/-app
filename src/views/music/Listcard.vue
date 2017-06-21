@@ -1,5 +1,6 @@
 <template>
-	<div class="listcard">
+<div class="listcard-wrapper">
+	<div class="listcard" v-show="loadReady">
 		<div class="header" :style="'backgroundImage: url('+list.coverImgUrl+')'">
 		</div>
 		<div class="avatar">
@@ -16,37 +17,51 @@
 					{{tag}}
 				</span>
 			</div>
-			<div class="intro">
+			<!-- <div class="intro">
 				<p class="text">简介：<span class="desc">{{list.description}}</span></p>
-			</div>
+			</div> -->
 		</div>
 		<div class="songlist">
 			<h1 class="title">歌单列表</h1>
 			<div class="song-wrapper">
-				<ul >
-					<li class="song-item" v-for="(song,index) in songs">
+				<ul id="songList">
+					<li class="song-item" v-for="(song,index) in songs"  @click="playAudio(song,$event)">
 						<span class="sortnum">{{index+1}}</span>
 						<div class="song">
-							<span class="song-name">{{song.name}}</span>
+							<span class="song-name" :class="{now:song.name === audio.name}">{{song.name}}</span>
 							<span class="song-author">{{song.ar[0].name}}</span>
+							<span class="play">
+								<i class="iconfont icon-bofang"></i>
+							</span>
 						</div>
 					</li>
 				</ul>
 			</div>
 		</div>
 	</div>
+	<load :load="loading"></load>
+</div>
+	
 </template>
 <script type="text/ecmascript2015">
 	import api from '../../api/api.js'
+	import { mapState } from 'vuex'
 	export default{
 		data(){
 			return {
 				songs: [],
 				list: {},
 				plays: [],
-				id: 0
+				id: 0,
+				loading:true,
+				loadReady:false
 			}
 		},
+		computed:mapState({
+			songList: state => state.songList,
+			currentIndex: state => state.currentIndex,
+			audio: state => state.audio
+		}),
 		methods:{
 			get(){
 				this.axios.get(api.getPlayListDetail(this.$route.params.id)).then((res)=>{
@@ -55,22 +70,44 @@
 				// console.log(this.list);
 				// console.log(this.songs)
 				})
+			},
+			playAudio(song,event){
+				// let songs = document.getElementById('songList').getElementsByClassName('song-name');
+				// for(let i=0,len=songs.length;i<len;i++){
+				// 	songs[i].style.color = '#474a4f'
+				// }
+				// event.currentTarget.getElementsByClassName('song-name')[0].style.color = '#ce3d3e'
+				document.getElementById('audioPlay').pause();
+				this.$store.commit('pause');
+				let audio ={}
+				audio.id = song.id;
+				audio.singer = song.ar[0].name;
+				audio.albumPic = song.al.picUrl;
+				audio.name = song.name;
+				this.$store.commit('addToList',audio);
+				this.$store.dispatch('getSong',audio.id)
 			}
 		},
 		beforeRouteEnter(to,from,next){
 			next(vm =>{
-				console.log(111)
+				
 				if (parseInt(to.params.id) !== parseInt(vm.id)){
-					console.log(222)
 					vm.get()
 				}
 			})
+		},
+		mounted(){
+			setTimeout(()=>{
+				this.loadReady=true;
+				this.loading = false;
+			}, 1000)
 		}
 	}
 </script>
 <style lang="less" scoped>
+@import '../../assets/font/iconfont.less';
+
 .listcard{
-	z-index:30;
 	background-color: #f5f5f5;
 	.header{
 		width: 100%;
@@ -157,14 +194,24 @@
 					border-bottom: 1px solid #e0e0e0;
 					margin-left: 10px;
 					padding-bottom: 10px;
+					position: relative;
 					.song-name{
 						display: block;
 						font-size: 16px;
 						line-height: 26px;
 					}
+					.now{
+						color: #ce3d3e;
+					}
 					.song-author{
 						font-size: 14px;
 						color:#888;
+					}
+					.play{
+						position: absolute;
+						right: 10px;
+						top:20px;
+						color: #999;
 					}
 				}
 			}

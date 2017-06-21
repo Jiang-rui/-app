@@ -1,12 +1,12 @@
 <template>
 	<div class="movie" >
-	  	<div class="movie-box">
+	  	<div class="movie-box" v-if="loadReady">
 	  		<div class="unit-content">
 	  			<div class="header">
 	  				<h1 class="title">正在热映</h1>
 	  				<router-link :to="{path: '/movie/in_theaters'}">更多</router-link>
 	  			</div>
-	  			<div class="content">
+	  			<div class="content ">
 	  				<ul class="content-wrapper" @touchstart="slide($event)">
 	  					<li v-for = "subject in inTheaters_show" :key="subject.id" class="item">
 	  						<router-link :to="{name:'subject',params:{id: subject.id}}">
@@ -94,11 +94,14 @@
 		  			</div>
 		  		</div>
 	  	</div>
+	  	<load :load='loading'></load>
 	</div>
+
 </template>
 <script type="text/ecmascript2015">
 	import axios from 'axios'
 	import star from '../../components/star/star.vue'
+	// import BScroll from 'better-scroll'
 	const HOST = '/api/'
 
 	let left = 0;
@@ -110,6 +113,8 @@
 				top250_show: [],
 				usBox_show: [],
 				city:'深圳',
+				loadReady: false,
+				loading:true
 			}
 		},
 		created(){
@@ -182,7 +187,18 @@
 			}	
 		},
 		mounted(){
-			// this.$emit('readyOn');
+			setTimeout(()=>{
+				this.loading = false;
+				this.loadReady = true;
+			}, 2000)
+			// this.$nextTick(()=>{
+			// 	let hotEls= document.getElementsByClassName("hot");
+			// 	console.log(hotEls[0])
+			// 	let hotScroll = new BScroll(hotEls[0],{
+			// 		scrollX:true
+			// 	})
+			// })
+			
 		},
 		components: {
 			star

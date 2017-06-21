@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="pad"></div>
-    <div class="content" ref="content" @load="load">
+    <div class="content" ref="content">
         <transition>
           <keep-alive>
               <router-view></router-view>
@@ -29,15 +29,23 @@
         </div>
         努力加载中……
     </div> -->
+     <playBar></playBar>
+    <transition name="fade">
+      <playList></playList>
+    </transition>
+    
   </div>
 </template>
 
 <script>
+import playBar from './components/playbar.vue'
+import playList from './components/playList.vue'
 export default {
   name: 'app',
   data(){
     return {
-      signflag: false
+      signflag: false,
+      id: 0
     }
   },
   mounted(){
@@ -50,15 +58,14 @@ export default {
     // // this.load()
   },
   methods:{
-     load(){
-        this.$refs.animate.style.display = 'none'
-        this.$refs.content.style.display = 'block'
-     },
      sign(){
-      console.log(11)
       this.signflag = true
      }
   },
+  components:{
+    playBar,
+    playList
+  }
 }
 </script>
 
@@ -136,5 +143,11 @@ export default {
 }
 #app .animate .img-wrapper{
   margin-left: -20px
+}
+.fade-enter-active,.fade-leave-active{
+    transition: 3s
+}
+.fade-enter,.fade-leave-to{
+  tranform:translateY(100%);
 }
 </style>
